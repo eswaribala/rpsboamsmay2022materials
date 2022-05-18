@@ -3,3 +3,6 @@ docker run -d -t -it --hostname my-rabbitmq --name rabbitmq3-server -p 15672:156
 
 
 docker run -d -t -it --hostname my-rabbitmq --name rabbitmq3-server -p 15672:15672 -p 5672:5672 -e RABBITMQ_DEFAULT_USER=guest -e RABBITMQ_DEFAULT_PASS=guest -e RABBITMQ_DEFAULT_VHOST=my_vhost rabbitmq:3-management
+
+
+docker run -it --rm --name rabbitmq-c1 -p 5672:5672 -p 15672:15672 rabbitmq:3-management
