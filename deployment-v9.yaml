@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: customerdeploy
+  name: customerdeploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: customerdeploy
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: customerdeploy
+    spec:
+      containers:
+      - image: eswaribala/boamay2022repo:customerv1
+        name: customerapp
+        resources: {}          
+        
+        env:
+            - name: MYSQL_URL
+              value: jdbc:mysql://mysql:3306/boamsmay2022customerdb?useSSL=false
+      #imagePullSecrets:  
+      #- name: globalaks-key
+
+status: {}
+--- 
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: customerservice
+  name: customerservice
+spec:
+    
+  ports:
+  - protocol: TCP
+    port: 7070
+    targetPort: 7070
+    name: http
+  - protocol: TCP
+    port: 443
+    targetPort: 443
+    name: https
+  selector:
+    app: customerdeploy
+  type: ClusterIP
+status:
+  loadBalancer: {}
